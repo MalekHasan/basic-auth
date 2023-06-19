@@ -6,7 +6,7 @@ const userRouter=express.Router()
 const {User}=require("../models/index")
 userRouter.post("/signup",signup)
 userRouter.post("/signin",basic,signin)
-async function signup(req,res){
+async function signup(req,res,next){
 try{
     const username=req.body.username;
     const hasedPassword=await bcrypt.hash(req.body.password,10)
@@ -14,10 +14,9 @@ try{
         username:username,
         password:hasedPassword
     })
-    
     res.status(201).json(record);
 }catch(e){
-    res.status(201).send("user is already exist");
+console.log(e);
 }
 
 }
